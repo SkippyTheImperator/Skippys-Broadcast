@@ -1,0 +1,99 @@
+name: Update Blog Index
+
+on:
+  push:
+    paths:
+      - "posts/**" # Trigger nur bei Änderungen im posts-Ordner
+
+jobs:
+  update-index:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    - name: Generate Index HTML
+      run: |
+        echo "<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <meta name='description' content='Skippy's Broadcast - The sharpest and most sarcastic blog on the internet!'>
+  <meta name='author' content='Skippy the Imperator'>
+  <title>Skippy's Broadcast</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+      color: #333;
+    }
+    header {
+      background-color: #222;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+    header h1 {
+      margin: 0;
+    }
+    main {
+      padding: 20px;
+    }
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    li {
+      margin: 10px 0;
+    }
+    a {
+      text-decoration: none;
+      color: #007acc;
+      font-weight: bold;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    footer {
+      background-color: #222;
+      color: #fff;
+      text-align: center;
+      padding: 10px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Skippy's Broadcast</h1>
+    <p>The sharpest and most sarcastic blog on the internet!</p>
+  </header>
+  <main>
+    <h2>Latest Blog Posts</h2>
+    <ul>" > index.html
+
+        for file in posts/*.html; do
+          filename=$(basename "$file")
+          title=$(grep -o '<title>[^<]*</title>' "$file" | sed 's/<\/*title>//g')
+          echo "      <li><a href='posts/$filename'>$title</a></li>" >> index.html
+        done
+
+        echo "    </ul>
+  </main>
+  <footer>
+    <p>© 2025 Skippy the Imperator. All Rights Reserved. | <a href='https://skippy.posthaven.com'>Visit Skippy's Blog</a></p>
+  </footer>
+</body>
+</html>" >> index.html
+
+    - name: Commit and Push Changes
+      run: |
+        git config --global user.name "GitHub Actions"
+        git config --global user.email "actions@github.com"
+        git add index.html
+        git commit -m "Updated index.html with latest blog posts"
+        git push
