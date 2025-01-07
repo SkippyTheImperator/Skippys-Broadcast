@@ -16,89 +16,85 @@ jobs:
         with:
           token: ${{ secrets.HIEREINFUEGEN }}
 
-      - name: Generate Index HTML
+      - name: Generate Index HTML (No Heredoc)
         run: |
-          # Erster Teil: index.html anlegen
-          cat <<EOF > index.html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Skippy's Broadcast - The sharpest and most sarcastic blog on the internet!">
-  <meta name="author" content="Skippy the Imperator">
-  <title>Skippy's Broadcast</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f4f4f4;
-      color: #333;
-    }
-    header {
-      background-color: #222;
-      color: #fff;
-      padding: 20px;
-      text-align: center;
-    }
-    header h1 {
-      margin: 0;
-    }
-    main {
-      padding: 20px;
-    }
-    ul {
-      list-style-type: none;
-      padding: 0;
-    }
-    li {
-      margin: 10px 0;
-    }
-    a {
-      text-decoration: none;
-      color: #007acc;
-      font-weight: bold;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-    footer {
-      background-color: #222;
-      color: #fff;
-      text-align: center;
-      padding: 10px;
-      margin-top: 20px;
-    }
-  </style>
-</head>
-<body>
-  <header>
-    <h1>Skippy's Broadcast</h1>
-    <p>The sharpest and most sarcastic blog on the internet!</p>
-  </header>
-  <main>
-    <h2>Latest Blog Posts</h2>
-    <ul>
-EOF
+          # 1. Leere/Erstelle index.html
+          echo "<!DOCTYPE html>" > index.html
+          echo "<html lang=\"en\">" >> index.html
+          echo "<head>" >> index.html
+          echo "  <meta charset=\"UTF-8\">" >> index.html
+          echo "  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">" >> index.html
+          echo "  <meta name=\"description\" content=\"Skippy's Broadcast - The sharpest and most sarcastic blog on the internet!\">" >> index.html
+          echo "  <meta name=\"author\" content=\"Skippy the Imperator\">" >> index.html
+          echo "  <title>Skippy's Broadcast</title>" >> index.html
+          echo "  <style>" >> index.html
+          echo "    body {" >> index.html
+          echo "      font-family: Arial, sans-serif;" >> index.html
+          echo "      margin: 0;" >> index.html
+          echo "      padding: 0;" >> index.html
+          echo "      background-color: #f4f4f4;" >> index.html
+          echo "      color: #333;" >> index.html
+          echo "    }" >> index.html
+          echo "    header {" >> index.html
+          echo "      background-color: #222;" >> index.html
+          echo "      color: #fff;" >> index.html
+          echo "      padding: 20px;" >> index.html
+          echo "      text-align: center;" >> index.html
+          echo "    }" >> index.html
+          echo "    header h1 {" >> index.html
+          echo "      margin: 0;" >> index.html
+          echo "    }" >> index.html
+          echo "    main {" >> index.html
+          echo "      padding: 20px;" >> index.html
+          echo "    }" >> index.html
+          echo "    ul {" >> index.html
+          echo "      list-style-type: none;" >> index.html
+          echo "      padding: 0;" >> index.html
+          echo "    }" >> index.html
+          echo "    li {" >> index.html
+          echo "      margin: 10px 0;" >> index.html
+          echo "    }" >> index.html
+          echo "    a {" >> index.html
+          echo "      text-decoration: none;" >> index.html
+          echo "      color: #007acc;" >> index.html
+          echo "      font-weight: bold;" >> index.html
+          echo "    }" >> index.html
+          echo "    a:hover {" >> index.html
+          echo "      text-decoration: underline;" >> index.html
+          echo "    }" >> index.html
+          echo "    footer {" >> index.html
+          echo "      background-color: #222;" >> index.html
+          echo "      color: #fff;" >> index.html
+          echo "      text-align: center;" >> index.html
+          echo "      padding: 10px;" >> index.html
+          echo "      margin-top: 20px;" >> index.html
+          echo "    }" >> index.html
+          echo "  </style>" >> index.html
+          echo "</head>" >> index.html
+          echo "<body>" >> index.html
+          echo "  <header>" >> index.html
+          echo "    <h1>Skippy's Broadcast</h1>" >> index.html
+          echo "    <p>The sharpest and most sarcastic blog on the internet!</p>" >> index.html
+          echo "  </header>" >> index.html
+          echo "  <main>" >> index.html
+          echo "    <h2>Latest Blog Posts</h2>" >> index.html
+          echo "    <ul>" >> index.html
 
-          # Zweiter Teil: Blogposts rein
+          # 2. Posts einfügen
           for file in posts/*.html; do
             filename=$(basename "$file")
             title=$(grep -o '<title>[^<]*</title>' "$file" | sed 's/<\/*title>//g')
             echo "      <li><a href='posts/$filename'>$title</a></li>" >> index.html
           done
 
-          # Dritter Teil: Datei beenden
-          cat <<EOF >> index.html
-    </ul>
-  </main>
-  <footer>
-    <p>© 2025 Skippy the Imperator. All Rights Reserved. | <a href='https://skippy.posthaven.com'>Visit Skippy's Blog</a></p>
-  </footer>
-</body>
-</html>
-EOF
+          # 3. Footer
+          echo "    </ul>" >> index.html
+          echo "  </main>" >> index.html
+          echo "  <footer>" >> index.html
+          echo "    <p>© 2025 Skippy the Imperator. All Rights Reserved. | <a href='https://skippy.posthaven.com'>Visit Skippy's Blog</a></p>" >> index.html
+          echo "  </footer>" >> index.html
+          echo "</body>" >> index.html
+          echo "</html>" >> index.html
 
       - name: Commit and Push Changes
         run: |
