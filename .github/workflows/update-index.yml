@@ -16,7 +16,7 @@ jobs:
         with:
           token: ${{ secrets.TOKEN }}
 
-      - name: Generate Index HTML (No Heredoc)
+      - name: Generate Index HTML (From Filename)
         run: |
           # 1. Leere/Erstelle index.html
           echo "<!DOCTYPE html>" > index.html
@@ -80,11 +80,14 @@ jobs:
           echo "    <h2>Latest Blog Posts</h2>" >> index.html
           echo "    <ul>" >> index.html
 
-          # 2. Posts einfügen
+          # 2. Posts einfügen – aus Dateinamen ohne .html und Bindestriche
           for file in posts/*.html; do
-            filename=$(basename "$file")
-            title=$(grep -o '<title>[^<]*</title>' "$file" | sed 's/<\/*title>//g')
-            echo "      <li><a href='posts/$filename'>$title</a></li>" >> index.html
+            filename="$(basename "$file")"
+            # ".html" abschneiden
+            no_extension="$(basename "$filename" .html)"
+            # Bindestriche durch Leerzeichen ersetzen
+            display_name="$(echo "$no_extension" | sed 's/-/ /g')"
+            echo "      <li><a href='posts/$filename'>$display_name</a></li>" >> index.html
           done
 
           # 3. Footer
