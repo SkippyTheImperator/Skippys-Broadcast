@@ -3,7 +3,7 @@ name: Update Blog Index
 on:
   push:
     paths:
-      - "posts/**"  # Trigger nur bei Änderungen im posts/-Ordner
+      - "posts/**"
 
 jobs:
   update-index:
@@ -17,8 +17,8 @@ jobs:
 
       - name: Generate Index HTML
         run: |
-          # 1) Ersten Teil des HTML in index.html schreiben
-          cat <<'HEADER' > index.html
+          # Heredoc 1: Starte index.html
+          cat <<EOF > index.html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -79,18 +79,17 @@ jobs:
   <main>
     <h2>Latest Blog Posts</h2>
     <ul>
-HEADER
+EOF
 
-          # 2) Posts auslesen und ul-Liste ergänzen
+          # Schleife: Alle HTML-Dateien aus posts/ einfügen
           for file in posts/*.html; do
-            filename=$(basename "$file")
-            # Title aus <title>-Tag extrahieren:
-            title=$(grep -o '<title>[^<]*</title>' "$file" | sed 's/<\/*title>//g')
+            filename="$(basename "$file")"
+            title="$(grep -o '<title>[^<]*</title>' "$file" | sed 's/<\/*title>//g')"
             echo "      <li><a href='posts/$filename'>$title</a></li>" >> index.html
           done
 
-          # 3) Footer-Teil des HTML anhängen
-          cat <<'FOOTER' >> index.html
+          # Heredoc 2: Beende index.html
+          cat <<EOF >> index.html
     </ul>
   </main>
   <footer>
@@ -98,7 +97,7 @@ HEADER
   </footer>
 </body>
 </html>
-FOOTER
+EOF
 
       - name: Commit and Push Changes
         run: |
