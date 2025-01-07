@@ -14,7 +14,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          token: ${{ secrets.HIEREINFUEGEN }}
+          token: ${{ secrets.TOKEN }}
 
       - name: Generate Index HTML (No Heredoc)
         run: |
