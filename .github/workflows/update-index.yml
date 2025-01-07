@@ -19,7 +19,7 @@ jobs:
       # 2. HTML-Monster generieren
       - name: Generate Index HTML
         run: |
-          cat <<EOF > index.html
+          cat << 'EOF' > index.html
           <!DOCTYPE html>
           <html lang="en">
           <head>
@@ -88,7 +88,7 @@ EOF
             echo "                <li><a href='posts/$filename'>$title</a></li>" >> index.html
           done
 
-          cat <<EOF >> index.html
+          cat << 'EOF' >> index.html
               </ul>
             </main>
             <footer>
