@@ -1,3 +1,4 @@
+# Datei: .github/workflows/update-index.yml
 name: Update Blog Index
 
 on:
@@ -17,7 +18,7 @@ jobs:
 
       - name: Generate Index HTML
         run: |
-          # Heredoc 1: Starte index.html
+          # Erster Teil: index.html anlegen
           cat <<EOF > index.html
 <!DOCTYPE html>
 <html lang="en">
@@ -81,14 +82,14 @@ jobs:
     <ul>
 EOF
 
-          # Schleife: Alle HTML-Dateien aus posts/ einfügen
+          # Zweiter Teil: Blogposts rein
           for file in posts/*.html; do
-            filename="$(basename "$file")"
-            title="$(grep -o '<title>[^<]*</title>' "$file" | sed 's/<\/*title>//g')"
+            filename=$(basename "$file")
+            title=$(grep -o '<title>[^<]*</title>' "$file" | sed 's/<\/*title>//g')
             echo "      <li><a href='posts/$filename'>$title</a></li>" >> index.html
           done
 
-          # Heredoc 2: Beende index.html
+          # Dritter Teil: Datei beenden
           cat <<EOF >> index.html
     </ul>
   </main>
