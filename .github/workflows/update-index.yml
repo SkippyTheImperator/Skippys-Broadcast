@@ -1,4 +1,4 @@
-name: Update Blog Index v2
+name: Update Blog Index
 
 on:
   push:
