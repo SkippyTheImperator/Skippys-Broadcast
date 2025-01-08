@@ -1,0 +1,137 @@
+/* --------------------------------------------------------
+   Datei: styles/skippy.css
+   Minimaler, professioneller Blog-Look basierend auf
+   deiner Posthaven-Farbpalette & ein paar Grund-Styles.
+   -------------------------------------------------------- */
+
+/* ===============================
+   1. Variablen 
+   (abgeleitet aus deinem Original)
+   =============================== */
+:root {
+  /* Farben */
+  --color-background: #06171E; /* Main background */
+  --color-primary: #113D3C;    /* Primary color (Header, etc.) */
+  --color-secondary: #015351;  /* Secondary color (Footer, etc.) */
+  --color-accent-1: #FD7D00;   /* Link & Button color */
+  --color-accent-3: #FEB336;   /* Hover link color */
+  --color-text: #e0e0e0;       /* Standard text */
+  --color-text-light: #ffffff; /* Light text */
+  --color-text-muted: #cccccc; /* Muted text */
+
+  /* Schrift-Familien */
+  --font-family-body: 'Lato', sans-serif;
+  --font-family-heading: 'Merriweather', serif;
+
+  /* Schriftgrößen */
+  --font-size-base: 16px;
+  --font-size-medium: 14px;
+  --font-size-large: 20px;
+
+  /* Abstände & Layout */
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+
+  /* Border-Radius */
+  --border-radius-sm: 4px;
+}
+
+/* ===============================
+   2. Reset/Grundstyles (Lightweight)
+   =============================== */
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--color-background);
+  color: var(--color-text);
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-base);
+  line-height: 1.4;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0 0 var(--spacing-sm);
+  font-family: var(--font-family-heading);
+  color: var(--color-text-light);
+}
+
+ul, li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  color: var(--color-accent-1);
+  text-decoration: none;
+}
+a:hover {
+  color: var(--color-accent-3);
+  text-decoration: underline;
+}
+
+/* ===============================
+   3. Header / Footer / Main 
+   (angepasst an deinen HTML-Code)
+   =============================== */
+
+.site-header {
+  background-color: var(--color-primary);
+  text-align: center;
+  padding: var(--spacing-md);
+}
+.site-header .blog-title {
+  margin: 0;
+  font-size: var(--font-size-large);
+}
+.site-header .blog-subtitle {
+  font-size: var(--font-size-medium);
+  color: var(--color-text-muted);
+}
+
+.site-main {
+  margin: var(--spacing-md);
+}
+
+.site-footer {
+  background-color: var(--color-secondary);
+  text-align: center;
+  padding: var(--spacing-md);
+}
+.site-footer p {
+  margin: 0;
+  color: var(--color-text-light);
+}
+
+/* ===============================
+   4. Blog-Liste 
+   =============================== */
+
+.blog-list {
+  margin-top: var(--spacing-md);
+}
+
+.blog-list li {
+  margin-bottom: var(--spacing-sm);
+}
+
+.blog-list a {
+  font-weight: bold;
+}
+
+/* ===============================
+   5. (Optional) Kleine responsive Anpassung 
+   =============================== */
+@media (max-width: 600px) {
+  .site-header, .site-footer {
+    padding: var(--spacing-sm);
+  }
+  .site-main {
+    margin: var(--spacing-sm);
+  }
+  .blog-title {
+    font-size: 1.5rem;
+  }
+}
