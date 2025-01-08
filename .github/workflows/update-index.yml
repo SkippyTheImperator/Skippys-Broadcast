@@ -56,7 +56,7 @@ jobs:
             no_extension="$(basename "$filename" .html)"
             # Replace dashes with spaces
             display_name="$(echo "$no_extension" | sed 's/-/ /g')"
-            echo "        <li><a href='posts/$filename'>$display_name</a></li>" >> index.html
+            echo "        <li>-&nbsp;<a href='posts/$filename'>$display_name</a></li>" >> index.html
           done
 
           echo "      </ul>" >> index.html
