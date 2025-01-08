@@ -121,6 +121,23 @@ a:hover {
   font-weight: bold;
 }
 
+/* Titel des Blog-Posts */
+.post-title {
+  font-family: 'Merriweather', serif;
+  font-size: 2.4em;
+  color: var(--color-text-light);
+  margin-bottom: var(--spacing-md);
+}
+
+/* Inhalt des Blog-Posts */
+.post-content {
+  font-family: 'Lato', sans-serif;
+  font-size: 1.1em;
+  line-height: 1.8;
+  color: var(--color-text);
+}
+
+
 /* ===============================
    5. (Optional) Kleine responsive Anpassung 
    =============================== */
