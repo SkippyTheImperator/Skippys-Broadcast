@@ -4,96 +4,55 @@ name: Update Blog Index
 on:
   push:
     paths:
-      - "posts/**"
+      - "posts/**"  # Trigger, wenn sich im posts/-Ordner was ändert
 
 jobs:
   update-index:
     runs-on: ubuntu-latest
 
     steps:
+      # Checkt das Repo aus, damit wir committen können
       - name: Checkout
         uses: actions/checkout@v3
         with:
           token: ${{ secrets.TOKEN }}
 
-      - name: Generate Index HTML (From Filename)
+      - name: Generate Index HTML
         run: |
-          # 1. Leere/Erstelle index.html
+          # HTML wird Zeile für Zeile zusammengebaut:
           echo "<!DOCTYPE html>" > index.html
-          echo "<html lang=\"en\">" >> index.html
+          echo "<html lang='en'>" >> index.html
           echo "<head>" >> index.html
-          echo "  <meta charset=\"UTF-8\">" >> index.html
-          echo "  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">" >> index.html
-          echo "  <meta name=\"description\" content=\"Skippy's Broadcast - The sharpest and most sarcastic blog on the internet!\">" >> index.html
-          echo "  <meta name=\"author\" content=\"Skippy the Imperator\">" >> index.html
+          echo "  <meta charset='UTF-8'>" >> index.html
+          echo "  <meta name='viewport' content='width=device-width, initial-scale=1.0'>" >> index.html
+          echo "  <meta name='description' content='Skippy's Broadcast - The sharpest and most sarcastic blog on the internet!'>" >> index.html
+          echo "  <meta name='author' content='Skippy the Imperator'>" >> index.html
           echo "  <title>Skippy's Broadcast</title>" >> index.html
-          echo "  <style>" >> index.html
-          echo "    body {" >> index.html
-          echo "      font-family: Arial, sans-serif;" >> index.html
-          echo "      margin: 0;" >> index.html
-          echo "      padding: 0;" >> index.html
-          echo "      background-color: #f4f4f4;" >> index.html
-          echo "      color: #333;" >> index.html
-          echo "    }" >> index.html
-          echo "    header {" >> index.html
-          echo "      background-color: #222;" >> index.html
-          echo "      color: #fff;" >> index.html
-          echo "      padding: 20px;" >> index.html
-          echo "      text-align: center;" >> index.html
-          echo "    }" >> index.html
-          echo "    header h1 {" >> index.html
-          echo "      margin: 0;" >> index.html
-          echo "    }" >> index.html
-          echo "    main {" >> index.html
-          echo "      padding: 20px;" >> index.html
-          echo "    }" >> index.html
-          echo "    ul {" >> index.html
-          echo "      list-style-type: none;" >> index.html
-          echo "      padding: 0;" >> index.html
-          echo "    }" >> index.html
-          echo "    li {" >> index.html
-          echo "      margin: 10px 0;" >> index.html
-          echo "    }" >> index.html
-          echo "    a {" >> index.html
-          echo "      text-decoration: none;" >> index.html
-          echo "      color: #007acc;" >> index.html
-          echo "      font-weight: bold;" >> index.html
-          echo "    }" >> index.html
-          echo "    a:hover {" >> index.html
-          echo "      text-decoration: underline;" >> index.html
-          echo "    }" >> index.html
-          echo "    footer {" >> index.html
-          echo "      background-color: #222;" >> index.html
-          echo "      color: #fff;" >> index.html
-          echo "      text-align: center;" >> index.html
-          echo "      padding: 10px;" >> index.html
-          echo "      margin-top: 20px;" >> index.html
-          echo "    }" >> index.html
-          echo "  </style>" >> index.html
+          # Hier binden wir die ausgelagerte CSS-Datei ein:
+          echo "  <link rel='stylesheet' href='styles/skippy.css' />" >> index.html
           echo "</head>" >> index.html
           echo "<body>" >> index.html
-          echo "  <header>" >> index.html
-          echo "    <h1>Skippy's Broadcast</h1>" >> index.html
-          echo "    <p>The sharpest and most sarcastic blog on the internet!</p>" >> index.html
+          echo "  <header class='site-header'>" >> index.html
+          echo "    <h1 class='blog-title'>Skippy's Broadcast</h1>" >> index.html
+          echo "    <p class='blog-subtitle'>The sharpest and most sarcastic blog on the internet!</p>" >> index.html
           echo "  </header>" >> index.html
-          echo "  <main>" >> index.html
+          echo "  <main class='site-main'>" >> index.html
           echo "    <h2>Latest Blog Posts</h2>" >> index.html
-          echo "    <ul>" >> index.html
+          echo "    <ul class='blog-list'>" >> index.html
 
-          # 2. Posts einfügen – aus Dateinamen ohne .html und Bindestriche
+          # Durchsucht den Ordner posts/*.html, formt Dateinamen zu Linktext um:
           for file in posts/*.html; do
             filename="$(basename "$file")"
-            # ".html" abschneiden
+            # ".html" entfernen
             no_extension="$(basename "$filename" .html)"
             # Bindestriche durch Leerzeichen ersetzen
             display_name="$(echo "$no_extension" | sed 's/-/ /g')"
             echo "      <li><a href='posts/$filename'>$display_name</a></li>" >> index.html
           done
 
-          # 3. Footer
           echo "    </ul>" >> index.html
           echo "  </main>" >> index.html
-          echo "  <footer>" >> index.html
+          echo "  <footer class='site-footer'>" >> index.html
           echo "    <p>© 2025 Skippy the Imperator. All Rights Reserved. | <a href='https://skippy.posthaven.com'>Visit Skippy's Blog</a></p>" >> index.html
           echo "  </footer>" >> index.html
           echo "</body>" >> index.html
