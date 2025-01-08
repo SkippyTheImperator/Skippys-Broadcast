@@ -1,25 +1,29 @@
-# Datei: .github/workflows/update-index.yml
-name: Update Blog Index
+# File: .github/workflows/update-index.yml
+# This workflow creates or updates the 'index.html' file whenever
+# you add or modify HTML files in the 'posts' folder.
+
+name: Build and Deploy Blog
 
 on:
   push:
     paths:
-      - "posts/**"  # Trigger, wenn sich im posts/-Ordner was ändert
+      - "posts/**"  # Trigger workflow on changes in 'posts' directory
 
 jobs:
   update-index:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkt das Repo aus, damit wir committen können
+      # 1) Checkout the repository to edit and commit changes
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          token: ${{ secrets.TOKEN }}
+          token: ${{ secrets.TOKEN }}  # Replace with your PAT or use the default GITHUB_TOKEN
 
+      # 2) Generate the 'index.html' file
       - name: Generate Index HTML
         run: |
-          # HTML wird Zeile für Zeile zusammengebaut:
+          # Start building the index.html
           echo "<!DOCTYPE html>" > index.html
           echo "<html lang='en'>" >> index.html
           echo "<head>" >> index.html
@@ -28,38 +32,46 @@ jobs:
           echo "  <meta name='description' content='Skippy's Broadcast - The sharpest and most sarcastic blog on the internet!'>" >> index.html
           echo "  <meta name='author' content='Skippy the Imperator'>" >> index.html
           echo "  <title>Skippy's Broadcast</title>" >> index.html
-          # Hier binden wir die ausgelagerte CSS-Datei ein:
+          # Link to the external CSS for styling
           echo "  <link rel='stylesheet' href='styles/skippy.css' />" >> index.html
           echo "  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">" >> index.html
           echo "</head>" >> index.html
           echo "<body>" >> index.html
+          echo "  <!-- .site-header is styled in skippy.css -->" >> index.html
           echo "  <header class='site-header'>" >> index.html
           echo "    <h1 class='blog-title'>Skippy's Broadcast</h1>" >> index.html
-          echo "    <p class='blog-subtitle'>Enter the world of Skippy: a relentless force of sarcasm, wit, and digital chaos. <br />From sharp commentary to unexpected humor, this is where bold ideas collide with unapologetic truth. 🤖⚡</p>" >> index.html
+          echo "    <p class='blog-subtitle'>The sharpest and most sarcastic blog on the internet!</p>" >> index.html
           echo "  </header>" >> index.html
-          echo "  <main class='site-main'>" >> index.html
-          echo "    <h2>Latest Blog Posts</h2>" >> index.html
-          echo "    <ul class='blog-list'>" >> index.html
+          echo "" >> index.html
+          echo "  <!-- .site-wrap ensures a centered, max-width container -->" >> index.html
+          echo "  <div class='site-wrap'>" >> index.html
+          echo "    <main class='site-main'>" >> index.html
+          echo "      <h2>Latest Blog Posts</h2>" >> index.html
+          echo "      <ul class='blog-list'>" >> index.html
 
-          # Durchsucht den Ordner posts/*.html, formt Dateinamen zu Linktext um:
+          # Loop through each HTML file in posts, transform the filename into a readable link text
           for file in posts/*.html; do
             filename="$(basename "$file")"
-            # ".html" entfernen
+            # Remove .html extension
             no_extension="$(basename "$filename" .html)"
-            # Bindestriche durch Leerzeichen ersetzen
+            # Replace dashes with spaces
             display_name="$(echo "$no_extension" | sed 's/-/ /g')"
-            echo "      <li>-&nbsp;<a href='posts/$filename'>$display_name</a></li>" >> index.html
+            echo "        <li><a href='posts/$filename'>$display_name</a></li>" >> index.html
           done
 
-          echo "    </ul>" >> index.html
-          echo "  </main>" >> index.html
+          echo "      </ul>" >> index.html
+          echo "    </main>" >> index.html
+          echo "  </div> <!-- end .site-wrap -->" >> index.html
+          echo "" >> index.html
+          echo "  <!-- Footer with a secondary background color -->" >> index.html
           echo "  <footer class='site-footer'>" >> index.html
           echo "    <p>© 2025 Skippy the Imperator. All Rights Reserved. | <a href='https://skippy.posthaven.com'>Visit Skippy's Blog</a></p>" >> index.html
           echo "  </footer>" >> index.html
           echo "</body>" >> index.html
           echo "</html>" >> index.html
 
-      - name: Commit and Push Changes
+      # 3) Commit and push the updated 'index.html'
+      - name: Commit and Push
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
