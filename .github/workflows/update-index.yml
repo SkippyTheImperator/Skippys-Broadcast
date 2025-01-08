@@ -30,6 +30,7 @@ jobs:
           echo "  <title>Skippy's Broadcast</title>" >> index.html
           # Hier binden wir die ausgelagerte CSS-Datei ein:
           echo "  <link rel='stylesheet' href='styles/skippy.css' />" >> index.html
+          echo "  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">" >> index.html
           echo "</head>" >> index.html
           echo "<body>" >> index.html
           echo "  <header class='site-header'>" >> index.html
