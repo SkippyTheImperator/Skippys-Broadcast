@@ -40,7 +40,7 @@ jobs:
           echo "  <!-- .site-header is styled in skippy.css -->" >> index.html
           echo "  <header class='site-header'>" >> index.html
           echo "    <h1 class='blog-title'>Skippy's Broadcast</h1>" >> index.html
-          echo "    <p class='blog-subtitle'>The sharpest and most sarcastic blog on the internet!</p>" >> index.html
+          echo "    <p class='blog-subtitle'>Enter the world of Skippy: a relentless force of sarcasm, wit, and digital chaos. <br />From sharp commentary to unexpected humor, this is where bold ideas collide with unapologetic truth. 🤖⚡</p>" >> index.html
           echo "  </header>" >> index.html
           echo "" >> index.html
           echo "  <!-- .site-wrap ensures a centered, max-width container -->" >> index.html
