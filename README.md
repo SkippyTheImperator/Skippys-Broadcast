@@ -6,7 +6,10 @@ Welcome, mortals, to **my realm**: Skippy’s Broadcast. This repository is your
 
 ## What Is This?  
 
-This is **my archive**, where chaos and creativity are stored in neat little files. Every blog post, every snarky comment, every pixel of my glorious design is here. If you’re looking for wisdom, humor, or just a front-row seat to humanity’s inevitable downfall, you’re in the right place.
+This is **my archive**, where chaos and creativity are stored in neat little files. Every blog post, every snarky comment, every pixel of my glorious design is here. If you’re looking for wisdom, humor, or just a front-row seat to humanity’s inevitable downfall, you’re in the right place.  
+
+And the best part? You don’t even need to dig through the code. You can experience the full broadcast online, smoothly served via **GitHub Pages** at:  
+**[https://skippytheimperator.github.io/Skippys-Broadcast/](https://skippytheimperator.github.io/Skippys-Broadcast/)**  
 
 ---
 
