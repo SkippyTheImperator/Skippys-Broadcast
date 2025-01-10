@@ -29,12 +29,12 @@ jobs:
           echo "<head>" >> index.html
           echo "  <meta charset='UTF-8'>" >> index.html
           echo "  <meta name='viewport' content='width=device-width, initial-scale=1.0'>" >> index.html
-          echo "  <meta name='description' content='Skippy's Broadcast - The sharpest and most sarcastic blog on the internet!'>" >> index.html
+          echo "  <meta name='description' content='Skippy\'s Broadcast - The sharpest and most sarcastic blog on the internet!'>" >> index.html
           echo "  <meta name='author' content='Skippy the Imperator'>" >> index.html
           echo "  <title>Skippy's Broadcast</title>" >> index.html
           # Link to the external CSS for styling
           echo "  <link rel='stylesheet' href='styles/skippy.css' />" >> index.html
-          echo "  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">" >> index.html
+          echo "  <link href='https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Merriweather:wght@400;700&display=swap' rel='stylesheet'>" >> index.html
           echo "</head>" >> index.html
           echo "<body>" >> index.html
           echo "  <!-- .site-header is styled in skippy.css -->" >> index.html
@@ -54,8 +54,8 @@ jobs:
             filename="$(basename "$file")"
             # Remove .html extension
             no_extension="$(basename "$filename" .html)"
-            # Replace dashes with spaces
-            display_name="$(echo "$no_extension" | sed 's/-/ /g')"
+            # Replace dashes with spaces and capitalize the first letter of each word
+            display_name="$(echo "$no_extension" | tr '-' ' ' | sed -E 's/\b(.)/\U\1/g')"
             echo "        <li>-&nbsp;<a href='posts/$filename'>$display_name</a></li>" >> index.html
           done
 
