@@ -53,10 +53,12 @@ jobs:
           for file in posts/*.html; do
             filename="$(basename "$file")"
             # Remove .html extension
-            no_extension="$(basename "$filename" .html)"
+            no_extension="${filename%.html}"
             # Replace dashes with spaces and capitalize the first letter of each word
             display_name="$(echo "$no_extension" | tr '-' ' ' | sed -E 's/\b(.)/\U\1/g')"
-            echo "        <li>-&nbsp;<a href='posts/$filename'>$display_name</a></li>" >> index.html
+            # Extract the last three words as hashtags
+            hashtags="$(echo "$no_extension" | awk -F'-' 'NF>=3 {print "#"$(NF-2)" #"$(NF-1)" #"$(NF)} NF<3 {print ""}')"
+            echo "        <li>-&nbsp;<a href='posts/$filename'>$display_name</a> <span class='hashtags'>${hashtags}</span></li>" >> index.html
           done
 
           echo "      </ul>" >> index.html
