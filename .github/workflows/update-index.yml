@@ -58,9 +58,9 @@ jobs:
           echo "      <ul class='blog-list'>" >> index.html
 
           # ----------------------------------------------------------------------
-          # 3. Iterate over all posts (sorted by the last commit timestamp, descending),
-          #    extract the commit date, remove the last 3 words from the filename,
-          #    and create the final display title.
+          # 3. Iterate over all posts (sorted by last commit timestamp, descending),
+          #    extract the commit date, remove the last 3 dash-separated words from
+          #    the filename, then shorten the title if it exceeds MAX_LENGTH.
           # ----------------------------------------------------------------------
           for file in $posts; do
             filename="$(basename "$file")"
@@ -71,15 +71,24 @@ jobs:
             # Remove .html extension
             no_extension="${filename%.html}"
 
-            # Remove the last 3 words (separated by dashes)
-            # e.g. if the file is "my-post-name-foo-bar-baz.html",
-            # it strips off the last "foo-bar-baz"
+            # Remove the last 3 dash-separated words
             truncated_name="$(echo "$no_extension" | awk -F'-' '{OFS="-"; NF-=3; print $0}')"
 
             # Replace dashes with spaces and capitalize each word
             display_name="$(echo "$truncated_name" | tr '-' ' ' | sed -E 's/\b(.)/\U\1/g')"
 
-            echo "        <li>${commit_date} - <a href='posts/${filename}'>${display_name}</a></li>" >> index.html
+            # --------------------------------------------------------------------
+            # Simple character-based truncation:
+            # If 'display_name' is longer than MAX_LENGTH, cut it and append '...'.
+            # --------------------------------------------------------------------
+            MAX_LENGTH=60
+            if [ ${#display_name} -gt $MAX_LENGTH ]; then
+              shortened_title="${display_name:0:$MAX_LENGTH}..."
+            else
+              shortened_title="$display_name"
+            fi
+
+            echo "        <li>${commit_date} - <a href='posts/${filename}'>${shortened_title}</a></li>" >> index.html
           done
 
           # ----------------------------------------------------------------------
