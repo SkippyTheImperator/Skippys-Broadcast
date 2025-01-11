@@ -11,12 +11,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1) Check out the repository
+      # 1) Check out the repository with full commit history (fetch-depth: 0)
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          # You can use the default GITHUB_TOKEN or a custom token from secrets
+          # Use your custom token or default GITHUB_TOKEN
           token: ${{ secrets.TOKEN }}
+          # IMPORTANT: fetch the entire Git history so we can correctly read commit timestamps
+          fetch-depth: 0
 
       # 2) Generate the 'index.html' file
       - name: Generate Index HTML
@@ -26,7 +28,7 @@ jobs:
           #    => 'git log -1 --format=%ct' returns the last commit's UNIX timestamp.
           # ----------------------------------------------------------------------
           posts=$(git ls-files posts/*.html | while read file; do
-            ts=$(git log -1 --format="%ct" -- "$file")  # Last commit timestamp
+            ts=$(git log -1 --format="%ct" -- "$file")  # Last commit timestamp for this file
             echo "$ts $file"
           done | sort -rn | cut -d' ' -f2- )
 
