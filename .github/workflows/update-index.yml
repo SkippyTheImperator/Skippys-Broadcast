@@ -16,7 +16,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           # You can use the default GITHUB_TOKEN or a custom token from secrets
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.TOKEN }}
 
       # 2) Generate the 'index.html' file
       - name: Generate Index HTML
