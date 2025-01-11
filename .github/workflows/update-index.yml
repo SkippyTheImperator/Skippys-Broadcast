@@ -22,11 +22,11 @@ jobs:
       - name: Generate Index HTML
         run: |
           # ----------------------------------------------------------------------
-          # 1. Retrieve all post files together with their last commit timestamps.
+          # 1. Retrieve all post files along with their last commit timestamps.
           #    => 'git log -1 --format=%ct' returns the last commit's UNIX timestamp.
           # ----------------------------------------------------------------------
           posts=$(git ls-files posts/*.html | while read file; do
-            ts=$(git log -1 --format="%ct" -- "$file")  # Last commit timestamp for this file
+            ts=$(git log -1 --format="%ct" -- "$file")  # Last commit timestamp
             echo "$ts $file"
           done | sort -rn | cut -d' ' -f2- )
 
@@ -56,8 +56,9 @@ jobs:
           echo "      <ul class='blog-list'>" >> index.html
 
           # ----------------------------------------------------------------------
-          # 3. Iterate over all posts in descending order of their last commit timestamp
-          #    and display the commit date + file name/title.
+          # 3. Iterate over all posts (sorted by the last commit timestamp, descending),
+          #    extract the commit date, remove the last 3 words from the filename,
+          #    and create the final display title.
           # ----------------------------------------------------------------------
           for file in $posts; do
             filename="$(basename "$file")"
@@ -65,9 +66,16 @@ jobs:
             # Get the last commit date in YYYY-MM-DD format
             commit_date="$(git log -1 --format=%cd --date=format:'%Y-%m-%d' -- "$file")"
 
-            # Extract a display title from the filename (remove .html, replace dashes, capitalize)
+            # Remove .html extension
             no_extension="${filename%.html}"
-            display_name="$(echo "$no_extension" | tr '-' ' ' | sed -E 's/\b(.)/\U\1/g')"
+
+            # Remove the last 3 words (separated by dashes)
+            # e.g. if the file is "my-post-name-foo-bar-baz.html",
+            # it strips off the last "foo-bar-baz"
+            truncated_name="$(echo "$no_extension" | awk -F'-' '{OFS="-"; NF-=3; print $0}')"
+
+            # Replace dashes with spaces and capitalize each word
+            display_name="$(echo "$truncated_name" | tr '-' ' ' | sed -E 's/\b(.)/\U\1/g')"
 
             echo "        <li>${commit_date} - <a href='posts/${filename}'>${display_name}</a></li>" >> index.html
           done
@@ -84,7 +92,7 @@ jobs:
           echo "</body>" >> index.html
           echo "</html>" >> index.html
 
-      # 3) Commit and push the updated 'index.html'
+      # 4) Commit and push the updated 'index.html'
       - name: Commit and Push
         run: |
           git config --global user.name "GitHub Actions"
