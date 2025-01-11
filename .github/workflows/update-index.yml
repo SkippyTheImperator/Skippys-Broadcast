@@ -1,29 +1,38 @@
 # File: .github/workflows/update-index.yml
-# This workflow creates or updates the 'index.html' file whenever
-# you add or modify HTML files in the 'posts' folder.
-
 name: Build and Deploy Blog
 
 on:
   push:
     paths:
-      - "posts/**"  # Trigger workflow on changes in 'posts' directory
+      - "posts/**"  # Trigger the workflow on any changes in the 'posts' directory
 
 jobs:
   update-index:
     runs-on: ubuntu-latest
 
     steps:
-      # 1) Checkout the repository to edit and commit changes
+      # 1) Check out the repository
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          token: ${{ secrets.TOKEN }}  # Replace with your PAT or use the default GITHUB_TOKEN
+          # You can use the default GITHUB_TOKEN or a custom token from secrets
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       # 2) Generate the 'index.html' file
       - name: Generate Index HTML
         run: |
-          # Start building the index.html
+          # ----------------------------------------------------------------------
+          # 1. Retrieve all post files together with their last commit timestamps.
+          #    => 'git log -1 --format=%ct' returns the last commit's UNIX timestamp.
+          # ----------------------------------------------------------------------
+          posts=$(git ls-files posts/*.html | while read file; do
+            ts=$(git log -1 --format="%ct" -- "$file")  # Last commit timestamp for this file
+            echo "$ts $file"
+          done | sort -rn | cut -d' ' -f2- )
+
+          # ----------------------------------------------------------------------
+          # 2. Start creating the index.html (HTML header, etc.)
+          # ----------------------------------------------------------------------
           echo "<!DOCTYPE html>" > index.html
           echo "<html lang='en'>" >> index.html
           echo "<head>" >> index.html
@@ -32,42 +41,45 @@ jobs:
           echo "  <meta name='description' content='Skippy\'s Broadcast - The sharpest and most sarcastic blog on the internet!'>" >> index.html
           echo "  <meta name='author' content='Skippy the Imperator'>" >> index.html
           echo "  <title>Skippy's Broadcast</title>" >> index.html
-          # Link to the external CSS for styling
           echo "  <link rel='stylesheet' href='styles/skippy.css' />" >> index.html
           echo "  <link href='https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Merriweather:wght@400;700&display=swap' rel='stylesheet'>" >> index.html
           echo "</head>" >> index.html
           echo "<body>" >> index.html
-          echo "  <!-- .site-header is styled in skippy.css -->" >> index.html
           echo "  <header class='site-header'>" >> index.html
           echo "    <h1 class='blog-title'>Skippy's Broadcast</h1>" >> index.html
-          echo "    <p class='blog-subtitle'>Enter the world of Skippy: a relentless force of sarcasm, wit, and digital chaos. <br />From sharp commentary to unexpected humor, this is where bold ideas collide with unapologetic truth. 🤖⚡</p>" >> index.html
+          echo "    <p class='blog-subtitle'>Enter the world of Skippy: a relentless force of sarcasm, wit, and digital chaos.<br />From sharp commentary to unexpected humor, this is where bold ideas collide with unapologetic truth. 🤖⚡</p>" >> index.html
           echo "  </header>" >> index.html
           echo "" >> index.html
-          echo "  <!-- .site-wrap ensures a centered, max-width container -->" >> index.html
           echo "  <div class='site-wrap'>" >> index.html
           echo "    <main class='site-main'>" >> index.html
           echo "      <h2>Latest Blog Posts</h2>" >> index.html
           echo "      <ul class='blog-list'>" >> index.html
 
-          # Loop through each HTML file in posts, transform the filename into a readable link text
-          for file in posts/*.html; do
+          # ----------------------------------------------------------------------
+          # 3. Iterate over all posts in descending order of their last commit timestamp
+          #    and display the commit date + file name/title.
+          # ----------------------------------------------------------------------
+          for file in $posts; do
             filename="$(basename "$file")"
-            # Remove .html extension
+
+            # Get the last commit date in YYYY-MM-DD format
+            commit_date="$(git log -1 --format=%cd --date=format:'%Y-%m-%d' -- "$file")"
+
+            # Extract a display title from the filename (remove .html, replace dashes, capitalize)
             no_extension="${filename%.html}"
-            # Remove the last three words (separated by dashes)
-            truncated_name="$(echo "$no_extension" | awk -F'-' '{OFS="-"; NF-=3; print $0}')"
-            # Replace dashes with spaces and capitalize the first letter of each word
-            display_name="$(echo "$truncated_name" | tr '-' ' ' | sed -E 's/\b(.)/\U\1/g')"
-            echo "        <li>-&nbsp;<a href='posts/$filename'>$display_name</a></li>" >> index.html
+            display_name="$(echo "$no_extension" | tr '-' ' ' | sed -E 's/\b(.)/\U\1/g')"
+
+            echo "        <li>${commit_date} - <a href='posts/${filename}'>${display_name}</a></li>" >> index.html
           done
 
+          # ----------------------------------------------------------------------
+          # 4. Close the HTML structure (footer, etc.)
+          # ----------------------------------------------------------------------
           echo "      </ul>" >> index.html
           echo "    </main>" >> index.html
-          echo "  </div> <!-- end .site-wrap -->" >> index.html
-          echo "" >> index.html
-          echo "  <!-- Footer with a secondary background color -->" >> index.html
+          echo "  </div>" >> index.html
           echo "  <footer class='site-footer'>" >> index.html
-          echo "    <p>© 2025 Skippy the Imperator. All Rights Reserved. | <a href='https://skippy.posthaven.com'>Visit Skippy's Blog</a></p>" >> index.html
+          echo "    <p>© 2025 Skippy the Imperator. All Rights Reserved.</p>" >> index.html
           echo "  </footer>" >> index.html
           echo "</body>" >> index.html
           echo "</html>" >> index.html
@@ -78,5 +90,5 @@ jobs:
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
           git add index.html
-          git commit -m "Updated index.html with latest blog posts"
+          git commit -m "Updated index.html with latest blog posts" || echo "No changes to commit"
           git push
