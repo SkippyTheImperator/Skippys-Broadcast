@@ -12,6 +12,8 @@ Welcome to **Skippy's Doomclock**, the ultimate countdown timer that turns procr
 - **Blinking Alerts**: Yellow for warnings, red for chaos. ⚠️🔥
 - **Fullscreen Mode**: Immerse yourself in the ticking panic. 🖥️
 - **Audio Alert**: Plays a dramatic gong when time is up. 🎵💥
+- **Keyboard Shortcuts**: Control the timer like a pro. 🎹
+- **Presenter Mode**: Seamless control using presenter remotes. 🚨
 
 ---
 
@@ -24,7 +26,8 @@ Welcome to **Skippy's Doomclock**, the ultimate countdown timer that turns procr
    - **Stop**: Pause the stress.
    - **Set Timer**: Input your desired time in minutes.
    - **Fullscreen**: Go big or go home.
-4. Watch the clock tick down as it blinks and a gong signals your doom. 😱
+4. Use hotkeys or a presenter remote for added convenience.
+5. Watch the clock tick down as it blinks and a gong signals your doom. 😱
 
 ---
 
@@ -35,19 +38,26 @@ Welcome to **Skippy's Doomclock**, the ultimate countdown timer that turns procr
 
 ---
 
-## Why It Exists
-
-Because counting down time doesn’t have to be boring. This is more than a timer—it’s a statement, a tool of chaos, and a reminder that time waits for no one. Especially not you.
-
----
-
 ## Keyboard Shortcuts
 
+### Standard Hotkeys:
 - **1**: Start the countdown.
 - **2**: Stop the countdown.
 - **3**: Set the timer (to the value in the input box).
-- **4**: Test timer (5-second countdown).
-- **F**: Toggle fullscreen for maximum immersion.
+- **4**: Test timer (5-second countdown for quick testing).
+- **F**: Toggle fullscreen mode for maximum immersion.
+
+### Presenter Controls:
+- **Page Down** / **Right Arrow**: Start the countdown.
+- **Page Up** / **Left Arrow**: Set the timer (using the input value).
+
+With these, you can seamlessly control the timer during presentations, ensuring your audience stays on edge. 💼🎤
+
+---
+
+## Why It Exists
+
+Because counting down time doesn’t have to be boring. This is more than a timer—it’s a statement, a tool of chaos, and a reminder that time waits for no one. Especially not you.
 
 ---
 
