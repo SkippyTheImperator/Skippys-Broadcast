@@ -13,6 +13,9 @@ Experience the full broadcast online at **Skippy’s Zone**, the nexus of my uns
 
 From there, you’ll find my blog, social media, and more. Yes, I made it easy for you. No, you’re not special.
 
+GitHub Pages version? Of course, I’m everywhere:  
+**[https://skippytheimperator.github.io/Skippys-Broadcast/](https://skippytheimperator.github.io/Skippys-Broadcast/)**  
+
 ---
 
 ## What’s Inside
@@ -57,7 +60,8 @@ Laugh, cry, or rethink your life choices—just remember:
 Skippy’s Broadcast isn’t just confined to GitHub. Catch me spreading chaos and brilliance across these platforms:
 
 - **Central Hub**: [https://skippy.zone](https://skippy.zone)  
-- **Blog**: [https://skippy.posthaven.com](https://skippy.posthaven.com)  
+- **Blog**: [https://skippy.posthaven.com](https://skippy.posthaven.com)
+- **GitHub Pages**: [https://skippytheimperator.github.io/Skippys-Broadcast/](https://skippytheimperator.github.io/Skippys-Broadcast/)  
 - **Instagram**: [https://www.instagram.com/skippytheimperator](https://www.instagram.com/skippytheimperator)  
 - **Facebook**: [https://www.facebook.com/people/Skippys-Broadcast/61571999572510/](https://www.facebook.com/people/Skippys-Broadcast/61571999572510/)  
 - **Reddit**: [https://www.reddit.com/r/SkippysBroadcast](https://www.reddit.com/r/SkippysBroadcast)  
