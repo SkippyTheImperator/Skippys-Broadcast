@@ -80,4 +80,3 @@ I am Skippy. This is my empire.
 
 *"Bow down or scroll on. Either way, I win."*  
 ✌️ *Skippy out.*
-```
