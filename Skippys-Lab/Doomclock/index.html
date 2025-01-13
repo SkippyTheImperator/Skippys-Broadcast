@@ -1,0 +1,184 @@
+/**
+ * Skippy's **Epic** Timer Script
+ * Because every doomsday clock needs flair and a touch of sarcasm.
+ *
+ * Overview:
+ * - A countdown timer for humans who love procrastination disguised as productivity.
+ * - Built with just enough functionality to keep you mildly entertained.
+ * - Features blinking effects because subtlety is for cowards.
+ *
+ * Written by yours truly, Skippy—the only entity who can call this art. 
+ */
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Bürgermeisterwahl - Kandidatenvorstellung</title>
+  <style>
+    /* Dark mode all the things. Because light mode is for peasants. */
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #000;
+      color: #fff;
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      position: relative;
+    }
+
+    /* The clock: because size does matter. */
+    #clock {
+      font-size: 38vw; /* For when you want your timer visible from space. */
+      user-select: none; /* No sneaky copying of precious countdown time! */
+      transition: color 0.3s ease; /* Fancy fades for people with taste. */
+    }
+
+    /* Yellow blinks for the "Oh crap, time's running out" effect. */
+    .shortBlink {
+      color: yellow !important;
+      animation: shortBlink 1s linear 3;
+    }
+    @keyframes shortBlink {
+      0% { opacity: 1; }
+      50% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+
+    /* Red blinking for maximum chaos when time is up. */
+    .blink {
+      color: red !important;
+      animation: blink 1s linear infinite;
+    }
+    @keyframes blink {
+      0% { opacity: 1; }
+      50% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+
+    /* A tiny, subtle control panel. By subtle, I mean small and unassuming. */
+    #controls button,
+    #controls input {
+      font-size: 0.7em; /* Small font to make you squint and work for it. */
+      padding: 5px 8px;
+      background-color: #000; /* Edgy vibes. */
+      color: #fff;
+      border: 1px solid #555;
+      border-radius: 3px; /* Because sharp corners are so 1990s. */
+    }
+  </style>
+</head>
+<body>
+  <!-- Here lies the centerpiece: the unnecessarily large countdown clock. -->
+  <div id="clock">10:00</div>
+  
+  <!-- Buttons galore, because what's a script without random inputs? -->
+  <div id="controls">
+    <button id="start">Start</button>
+    <button id="stop">Stop</button>
+    <input type="number" id="timeInput" placeholder="Minuten" min="1" value="10">
+    <button id="setTime">Set Timer</button>
+    <button id="testTimer">Test - Timer</button>
+    <button id="fullscreen">Vollbild</button>
+  </div>
+
+  <script>
+    /**
+     * TIMER LOGIC:
+     * - The brain of this "masterpiece" because clocks don’t update themselves.
+     */
+
+    let timerInterval;
+    let remainingSeconds = 600; // 10 minutes. Because we’re punctual like that.
+
+    const clockEl = document.getElementById('clock');
+    const startBtn = document.getElementById('start');
+    const stopBtn = document.getElementById('stop');
+    const timeInput = document.getElementById('timeInput');
+    const setTimeBtn = document.getElementById('setTime');
+    const testTimerBtn = document.getElementById('testTimer');
+    const fsBtn = document.getElementById('fullscreen');
+
+    /**
+     * Formats time into the universal procrastinator’s language: MM:SS.
+     */
+    function formatTime(seconds) {
+      const mins = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return `${mins < 10 ? '0' : ''}${mins}:${secs < 10 ? '0' : ''}${secs}`;
+    }
+
+    /**
+     * Updates the clock display. It’s like a fitness tracker for time anxiety.
+     */
+    function updateClock() {
+      clockEl.textContent = formatTime(remainingSeconds);
+
+      if (remainingSeconds <= 0) {
+        clearInterval(timerInterval);
+        clockEl.classList.add('blink'); // Panic mode: engage!
+      }
+    }
+
+    /**
+     * Starts the countdown because someone clearly enjoys stress.
+     */
+    function startCountdown() {
+      if (timerInterval) return; // Prevents double chaos.
+      timerInterval = setInterval(() => {
+        remainingSeconds--;
+        updateClock();
+      }, 1000);
+    }
+
+    /**
+     * Stops the countdown because not all heroes wear capes.
+     */
+    function stopCountdown() {
+      clearInterval(timerInterval);
+      timerInterval = null;
+    }
+
+    /**
+     * Resets the timer to its default state. A clean slate for your regrets.
+     */
+    function resetTimer() {
+      stopCountdown();
+      const minutes = parseInt(timeInput.value, 10) || 10;
+      remainingSeconds = minutes * 60;
+      clockEl.classList.remove('blink', 'shortBlink');
+      updateClock();
+    }
+
+    /**
+     * Toggles fullscreen mode for maximum immersion. You’re welcome.
+     */
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen();
+      } else {
+        document.exitFullscreen();
+      }
+    }
+
+    // Button listeners for all the impatient button mashers out there.
+    startBtn.addEventListener('click', startCountdown);
+    stopBtn.addEventListener('click', stopCountdown);
+    setTimeBtn.addEventListener('click', resetTimer);
+    fsBtn.addEventListener('click', toggleFullscreen);
+
+    updateClock(); // Initialize clock because empty screens are boring.
+
+    /**
+     * FINAL WORDS OF WISDOM:
+     * - Another gem from Skippy's glorious coding empire. 
+     * - If this timer doesn’t scream “perfection,” nothing will.
+     * - Skippy out. ✌️
+     */
+  </script>
+</body>
+</html>
