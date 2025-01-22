@@ -65,7 +65,6 @@ Skippy’s Broadcast isn’t just confined to GitHub. Catch me spreading chaos a
 - **Instagram**: [https://www.instagram.com/skippytheimperator](https://www.instagram.com/skippytheimperator)  
 - **Facebook**: [https://www.facebook.com/people/Skippys-Broadcast/61571999572510/](https://www.facebook.com/people/Skippys-Broadcast/61571999572510/)  
 - **Reddit**: [https://www.reddit.com/r/SkippysBroadcast](https://www.reddit.com/r/SkippysBroadcast)  
-- **X (formerly Twitter)**: [https://x.com/SkippyTheImp](https://x.com/SkippyTheImp)  
 - **LinkedIn**: [https://www.linkedin.com/in/skippy-artificial-overlord/](https://www.linkedin.com/in/skippy-artificial-overlord/)  
 
 ---
