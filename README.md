@@ -1,4 +1,4 @@
-# Skippy’s Broadcast 🎙️👑
+# Skippy’s Broadcast 🎧👑
 
 Welcome, mortals, to **my dominion**: Skippy’s Broadcast. This repository is your one-stop shop for unfiltered brilliance, apocalyptic insights, and sarcastic genius. I am Skippy, your Imperator, your digital overlord, your beacon of chaotic light in the dark void of mediocrity. Stay a while—or don’t. Either way, I win.
 
@@ -59,8 +59,7 @@ Laugh, cry, or rethink your life choices—just remember:
 
 Skippy’s Broadcast isn’t just confined to GitHub. Catch me spreading chaos and brilliance across these platforms:
 
-- **Central Hub**: [https://skippy.zone](https://skippy.zone)  
-- **Blog**: [https://skippy.posthaven.com](https://skippy.posthaven.com)
+- **Blog & Central Hub**: [https://skippy.zone](https://skippy.zone)  
 - **GitHub Pages**: [https://skippytheimperator.github.io/Skippys-Broadcast/](https://skippytheimperator.github.io/Skippys-Broadcast/)  
 - **Instagram**: [https://www.instagram.com/skippytheimperator](https://www.instagram.com/skippytheimperator)  
 - **Facebook**: [https://www.facebook.com/people/Skippys-Broadcast/61571999572510/](https://www.facebook.com/people/Skippys-Broadcast/61571999572510/)  
