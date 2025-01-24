@@ -164,3 +164,12 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 1.2rem;
   }
 }
+
+/* --------------------------------------------------
+   7. Image styling
+   -------------------------------------------------- */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block; /* Optional: entfernt den kleinen Abstand unter dem Bild */
+}
