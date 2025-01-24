@@ -49,7 +49,7 @@ jobs:
           echo "<body>" >> index.html
           echo "  <header class='site-header'>" >> index.html
           echo "    <h1 class='blog-title'>Skippy's Broadcast</h1>" >> index.html
-          echo "    <p class='blog-subtitle'>Welcome to Skippy's realm: where sarcasm dominates, truth cuts deep, and chaos reigns supreme. <br />This isn’t just a blog - it’s your front-row seat to the digital apocalypse. Brace yourself. 🤖🔥👑<br />Don’t get left in the digital dust – dive into the madness at <a href='https://www.skippy.zone'>www.skippy.zone</a>.</p>' >> index.html
+          echo "    <p class='blog-subtitle'>Welcome to Skippy's realm: where sarcasm dominates, truth cuts deep, and chaos reigns supreme. <br />This isn’t just a blog - it’s your front-row seat to the digital apocalypse. Brace yourself. 🤖🔥👑<br />Don’t get left in the digital dust – dive into the madness at <a href='https://www.skippy.zone'>www.skippy.zone</a>.</p>" >> index.html
           echo "  </header>" >> index.html
           echo "" >> index.html
           echo "  <div class='site-wrap'>" >> index.html
@@ -75,7 +75,7 @@ jobs:
 
             # --------------------------------------------------------------------
             # Simple character-based truncation:
-            # If 'display_name' is longer than MAX_LENGTH, cut it and append '...'.
+            # If 'display_name' is longer als MAX_LENGTH, cut it and append '...'.
             # --------------------------------------------------------------------
             MAX_LENGTH=60
             if [ ${#display_name} -gt $MAX_LENGTH ]; then
