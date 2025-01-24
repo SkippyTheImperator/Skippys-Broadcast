@@ -171,5 +171,5 @@ h1, h2, h3, h4, h5, h6 {
 img {
   max-width: 100%;
   height: auto;
-  display: block; /* Optional: entfernt den kleinen Abstand unter dem Bild */
+  display: block; 
 }
