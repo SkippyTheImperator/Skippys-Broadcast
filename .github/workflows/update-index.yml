@@ -59,8 +59,7 @@ jobs:
 
           # ----------------------------------------------------------------------
           # 3. Iterate over all posts (sorted by last commit timestamp, descending),
-          #    extract the commit date, remove the last 3 dash-separated words from
-          #    the filename, then shorten the title if it exceeds MAX_LENGTH.
+          #    extract the commit date, format the title.
           # ----------------------------------------------------------------------
           for file in $posts; do
             filename="$(basename "$file")"
@@ -71,11 +70,8 @@ jobs:
             # Remove .html extension
             no_extension="${filename%.html}"
 
-            # Remove the last 3 dash-separated words
-            truncated_name="$(echo "$no_extension" | awk -F'-' '{OFS="-"; NF-=3; print $0}')"
-
             # Replace dashes with spaces and capitalize each word
-            display_name="$(echo "$truncated_name" | tr '-' ' ' | sed -E 's/\b(.)/\U\1/g')"
+            display_name="$(echo "$no_extension" | tr '-' ' ' | sed -E 's/\b(.)/\U\1/g')"
 
             # --------------------------------------------------------------------
             # Simple character-based truncation:
@@ -99,7 +95,7 @@ jobs:
           echo "  </div>" >> index.html
           echo "  <footer class='site-footer'>" >> index.html
           echo "    <p>© 2025 Skippy the Imperator. All Rights Reserved.</p>" >> index.html
-          echo "  </footer>" >> index.html
+          echo "</footer>" >> index.html
           echo "</body>" >> index.html
           echo "</html>" >> index.html
 
